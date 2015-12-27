@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="counting.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Тестовое задание</title>
+</head>
+
+<body>
+<!--
+Задана последовательность: F(0) = 0, F(1) = 1, F(n) = F(n-1)/n + F(n-2), n >=2 (измененная последовательность чисел Фибоначчи).
+
+1) При нажатии на кнопку #fillFirstList, первый список <ul> должен заполниться последовательностью из 50-ти чисел, начиная с 10000000-ого элемента последовательности.
+
+2) При нажатии на кнопку #fillSecondList, второй список <ul> должен заполниться последовательностью из 50-ти чисел, начиная с 20000000-ого элемента последовательности.
+
+Важно: помните о производительности и user experience: для пользователя выполнение действий на странице работает гладко, достаточно быстро, без зависания браузера, и если это необходимо - с индикацией выполнения задачи (например, прелоудером или изменением текста кнопки).
+
+Технологии: HTML, JavaScript, CSS. Вы можете использовать любые фреймворки, или не использовать никаких.
+
+Пример значений в данной последовательности (для проверки):
+
+F(0) = 0
+F(1) = 1
+F(2) = 0.5
+F(3) = 1.1666666666666667
+F(4) = 0.7916666666666667
+...
+F(10) = 1.3564608134920637
+
+-->
+<div id="wrapper">
+    <div id="firstListBlock">
+        <input type="button" value="Заполнить первый список" id="fillFirstList" class="fillButton" />
+        <progress class="progressBar" id="firstProgress"  style="display: none;" value="0" max="1000"></progress>
+        <ul id="firstList" class="outputList"></ul>
+    </div>
+
+    <div id="secondListBlock">
+        <input type="button" value="Заполнить второй список" id="fillSecondList" class="fillButton" />
+        <progress class="progressBar" id="secondProgress" style="display: none;" value="0" max="1000"></progress>
+        <ul id="secondList" class="outputList"></ul>
+    </div>
+</div>
+
+
+
+</body>
+</html>
