@@ -18,6 +18,8 @@ $(function(){
     // Последний элемент последовательности
     var fib2;
 
+    var fib3;
+
     // Следующий для вычисления элемент
     var n;
 
@@ -52,43 +54,37 @@ $(function(){
             finishScrolling();
         } else {
             // Определяем, до какого числа "прокручивать" - либо до текущего + размер секции, либо до конца, смотря что ближе
-            var numberTo = (n + sectionSize > maxOffset) ? maxOffset : n + sectionSize;
-            $.get('counting.php', {
-                fib1: fib1,
-                fib2: fib2,
-                numberFrom: n,
-                numberTo: numberTo,
-                scrolling: 1
-            }, function(answer){
-                $progressBar.val(numberTo * 1000 / maxOffset);
-                answer = JSON.parse(answer);
-                fib1 = answer[0];
-                fib2 = answer[1];
-                n = numberTo + 1;
-                setTimeout(ajaxSection(section + 1, maxOffset), 10);
-            });
+            var numberTo = (n + sectionSize - 1 > maxOffset) ? maxOffset : n + sectionSize - 1;
+
+            console.log(n, numberTo);
+            for (n; n <= numberTo; n++) {
+                fib3 = fib2 / n + fib1;
+                fib1 = fib2;
+                fib2 = fib3;
+            }
+
+            $progressBar.val(numberTo * 1000 / maxOffset);
+            setTimeout(ajaxSection(section + 1, maxOffset), 10);
         }
     }
 
     // После "прокрутки" на нужное кол-во элементов, выводим нужно число следующих
     function finishScrolling() {
-        // У нас есть первый выводимый элемент, нужно найти ещё limit - 1
-        var numberTo = n + outputLimit - 2;
-        $.get('counting.php', {
-            fib1: fib1,
-            fib2: fib2,
-            numberFrom: n,
-            numberTo : numberTo,
-            scrolling: 0
-        }, function(answer) {
-            answer = JSON.parse(answer);
-            // Добавялем элементы в список
-            for (var key in answer) {
-                $listToFill.append('<li>F(' + key + ') = ' + answer[key] + '</li>');
-            }
-            finishAnimation();
-        });
+        // У нас есть первый элемент для вывода
+        $listToFill.append('<li>F(' + (n - 1) + ') = ' + fib2 + '</li>');
 
+        // Нужно найти ещё (limit - 1) элементов
+        var numberTo = n + outputLimit - 2;
+
+        for (n; n <= numberTo; n++) {
+            fib3 = fib2 / n + fib1;
+            fib1 = fib2;
+            fib2 = fib3;
+            // Выводим очередной элемент
+            $listToFill.append('<li>F(' + n + ') = ' + fib2 + '</li>');
+        }
+
+        finishAnimation();
     }
 
     // JQuery-эффекты по завершении расчётов
